@@ -80,7 +80,7 @@ let previous (card: t) : t =
   | T6 -> T5
   | T7 -> T6
   | T8 -> T7
-  | T9 -> T9
+  | T9 -> T8
   | T10 -> T9
   | Jack -> T10
   | Queen -> Jack
