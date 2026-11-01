@@ -142,7 +142,7 @@ let allSpades : t list = List.map (fun value -> (value, Color.Spade)) Value.all
 let allHearts : t list = List.map (fun value -> (value, Color.Heart)) Value.all
 let allDiamonds : t list = List.map (fun value -> (value, Color.Diamond)) Value.all
 let allClubs : t list = List.map (fun value -> (value, Color.Club)) Value.all
-let all : t list = List.append (List.append (List.append allSpades allHearts) allDiamonds) allClubs
+let all : t list = allSpades @ allHearts @ allDiamonds @ allClubs
 
 let getValue ((v, _): t) =  v
 let getColor ((_, c): t) =  c
@@ -161,10 +161,9 @@ let min (a: t) (b: t) =
   if (compare a b) <= 0 then a else b
 
 let best (cards: t list) : t =
-  if List.is_empty cards
-    then invalid_arg "invalid argument: empty cards list"
-  else
-    List.fold_left max (List.nth cards 0) cards
+  match cards with
+  | [] -> invalid_arg "invalid argument: empty cards list"
+  | head :: tail -> List.fold_left max head tail
 
 let isOf ((_, c): t) color = c = color
 let isSpade (card: t) = isOf card Color.Spade
